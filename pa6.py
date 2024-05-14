@@ -59,7 +59,7 @@ def treemap(fun,tree):
     that changes value of each child based on function"""
     
     tree.key,tree.value = fun(tree.key,tree.value)
-    for child in tree.childen:
+    for child in tree.children:
         treemap(fun, child)
 
 
