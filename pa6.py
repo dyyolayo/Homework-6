@@ -76,7 +76,7 @@ class DTree:
         self.outcome = outcome
 
 
-        def tuple_atleast(self):
+    def tuple_atleast(self):
             """determines necessary entries that should exist in a tuple"""
             
             high = 0
@@ -86,25 +86,26 @@ class DTree:
                 high = (high,self.greater.tuple_atleast())
             if self.varuable is not None:
                 high = (high,self.variable + 1)
-            
+
             return high
 
 
-        def find_outcome(self,obs):
+    def find_outcome(self,obs):
             """takes in a tuple with observations and navigates through the tree 
             to provide the outcome that matches (like “walk”) """
             
             if self.outcome is not None:
                 return self.outcome
             
-            value = obs[self.variable]
+            value = obs(self.variable)
+        
             if value <= self.threshold:
                 return self.lessequal.find_outcome(obs)
             else:
                 return self.greater.find_outcome(obs)
 
 
-        def no_repeats(self):
+    def no_repeats(self):
             """True iff there are no repeats, False otherwise"""
             
             def helper(node, lv = None):
@@ -113,7 +114,7 @@ class DTree:
                 if node.variable == lv:
                     return False
                 return helper(node.lessequal, node.variable) and helper(node.greater,node.variable)
-            
+                
             return helper(self)
         
         
