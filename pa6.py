@@ -64,11 +64,12 @@ def treemap(fun,tree):
 
 
 class DTree:
-    def __init__(self,variable,threshold,lessequal,greater,outcome):
+    def __init__(self, variable, threshold, lessequal, greater, outcome):
         if (variable is not None and threshold is not None and lessequal is not None
             and greater is not None) is not (outcome is None):
             raise ValueError
-            
+
+
         self.variable = variable
         self.threshold = threshold
         self.lessequal= lessequal
@@ -78,7 +79,7 @@ class DTree:
 
     def tuple_atleast(self):
             """determines necessary entries that should exist in a tuple"""
-            
+
             high = 0
             if self.lessequal:
                 high = (high,self.lessequal.tuple_atleast())
@@ -90,14 +91,14 @@ class DTree:
             return high
 
 
-    def find_outcome(self,obs):
+    def find_outcome(self, obs):
             """takes in a tuple with observations and navigates through the tree 
             to provide the outcome that matches (like “walk”) """
             
             if self.outcome is not None:
                 return self.outcome
             
-            value = obs(self.variable)
+            value = obs[self.variable]
         
             if value <= self.threshold:
                 return self.lessequal.find_outcome(obs)
